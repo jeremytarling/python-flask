@@ -57,15 +57,23 @@ def now_playing_on_6_music():
     text = page.read().decode("utf8")
     # parse the string as JSON into a dictionary (hash)
     data = json.loads(text)
-    # pass to the page template
-    return render_template("now_playing_on_6.html",
-                            title='now playing on BBC 6 music',
-                            track=data["realtime"]["title"],
-                            artist=data["realtime"]["artist"],
-                            version_pid = data["realtime"]["version_pid"],
-                            musicbrainz_artist = data["realtime"]["musicbrainz_artist"]["id"]
-                            )
-
+    # sometimes the musicbrainz_artist hash is missing so we need 2 template versions
+    if "musicbrainz_artist" in data["realtime"]: 
+        return render_template("now_playing_on_6.html",
+                                title='now playing on BBC 6 music',
+                                track=data["realtime"]["title"],
+                                artist=data["realtime"]["artist"],
+                                version_pid = data["realtime"]["version_pid"],
+                                musicbrainz_artist = data["realtime"]["musicbrainz_artist"]["id"]
+                                )
+    else:
+        return render_template("now_playing_on_6.html",
+                                title='now playing on BBC 6 music',
+                                track=data["realtime"]["title"],
+                                artist=data["realtime"]["artist"],
+                                version_pid = data["realtime"]["version_pid"],
+                                musicbrainz_artist = "not available"                        
+                                )
 
 @app.route('/tarot')
 def tarot():
