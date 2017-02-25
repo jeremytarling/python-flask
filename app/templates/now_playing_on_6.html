@@ -1,0 +1,10 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <p>now playing on BBC radio 6 music</p>
+    <h2>track: {{ track }}</h2>
+    <h2>artist: {{ artist }}</h2>
+    <h2>version_pid: {{ version_pid }}</h2>
+    <h2>musicbrainz_artist: {{ musicbrainz_artist }}</h2>
+{% endblock %}
